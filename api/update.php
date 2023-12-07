@@ -2,10 +2,9 @@
 global $conn;
 require_once '../db.php';
 require_once '../auth.php';
+require_once '../usermanager.php';
 
 isAuth();
-
-$_SESSION['email'] = "mail";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
@@ -14,9 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $actif = $_POST["actif"];
     $age = $_POST["age"];
-    $createdBy = $_SESSION["email"];
+    $createdBy = $_POST["createdBy"];
 
-    $req = $conn->prepare('INSERT INTO users (name, surname, email, password, actif, age, createdBy) VALUES (:name, :surname, :email, :password, :actif, :age, :createdBy)');
+    $req = $conn->prepare('UPDATE users SET name = :name, surname = :surname, email = :email, password = :password, actif = :actif, age = :age, createdBy = :createdBy WHERE id = :id');
+    $req->bindParam(':id', $_POST['id']);
     $req->bindParam(':name', $name);
     $req->bindParam(':surname', $surname);
     $req->bindParam(':email', $email);
@@ -27,3 +27,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $req->execute();
 }
+?>

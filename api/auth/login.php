@@ -1,7 +1,12 @@
 <?php
 
+session_start();
+
 global $conn;
 require_once '../../db.php';
+require_once '../../auth.php';
+
+isAuth();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
@@ -19,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["id"] = $user["id"];
         header("Location: /dashboard/index.php");
     } else {
-        header("Location: index.php?error=id");
+        header("Location: ../../index.php?error=id");
     }
 
 }
