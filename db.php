@@ -1,12 +1,18 @@
 <?php
 
+if ($_SERVER['SCRIPT_FILENAME'] == __FILE__) {
+    header("Location: index.php");
+    exit();
+}
+
 $USERNAME = "root";
-$PASSWORD = "";
+$PASSWORD = "password";
 
-$conn = new PDO('mysql:host=localhost;dbname=users', $USERNAME, $PASSWORD);
-
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+try {
+    $conn = new PDO('mysql:host=dlocalhost;dbname=lemoine', $USERNAME, $PASSWORD);
+} catch (PDOException $e) {
+    header("Location: /error.php?error=databaseConn&message=" . $e->getMessage());
+    exit();
 }
 
 ?>
