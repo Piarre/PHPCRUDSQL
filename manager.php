@@ -1,5 +1,10 @@
 <?php
 
+if ($_SERVER['SCRIPT_FILENAME'] == __FILE__) {
+    header("Location: index.php");
+    exit();
+}
+
 function getCreatorEmail($id)
 {
     global $conn;
