@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <title>PHP Test</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
 <?php
 require_once 'auth.php';
 isDisconnected();
 ?>
-
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>PHP Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 <body>
 <div class="max-w-5xl mx-auto">
 
