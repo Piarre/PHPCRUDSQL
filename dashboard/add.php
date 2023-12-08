@@ -1,13 +1,9 @@
 <?php
 require_once '../auth.php';
-
 isAuth();
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +12,6 @@ isAuth();
 </head>
 
 <body class="bg-gray-100 p-8">
-
 <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md" id="userForm">
     <form>
         <h2 class="text-2xl font-bold mb-4">Add User</h2>
@@ -62,8 +57,9 @@ isAuth();
 
         <span class="text-red-600 text-[14px] font-bold opacity-0" id="message">Please fill all fields</span>
         <div class="flex gap-10 px-4">
-            <a type="button" class="hover:cursor-pointer bg-blue-500 w-full text-white p-2 rounded-md transition text-center items-center""
-               onclick="history.back()">Go Back</a>
+            <a type="button"
+               class="hover:cursor-pointer bg-blue-500 w-full text-white p-2 rounded-md transition text-center items-center""
+            onclick="history.back()">Go Back</a>
             <button class="bg-blue-500 w-full text-white p-2 rounded-md transition" type="submit" id="submit-btn">
                 Add
             </button>

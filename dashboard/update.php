@@ -1,3 +1,19 @@
+<?php
+
+global $conn;
+require_once '../db.php';
+require_once '../auth.php';
+require_once '../manager.php';
+
+isAuth();
+
+$user = getUserById($_GET["id"]);
+
+if ($user == null) {
+    header("Location: index.php");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,24 +25,6 @@
 </head>
 
 <body class="bg-gray-100 p-8">
-
-<?php
-
-global $conn;
-require_once '../db.php';
-require_once '../auth.php';
-require_once '../usermanager.php';
-
-isAuth();
-
-$user = getUserById($_GET["id"]);
-
-if ($user == null) {
-    header("Location: index.php");
-}
-
-?>
-
 <div class="max-w-md mx-auto bg-white p-6 rounded-md shadow-md" id="userForm">
     <form>
         <h2 class="text-2xl font-bold mb-4">Update User</h2>

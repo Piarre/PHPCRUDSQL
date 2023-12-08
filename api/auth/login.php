@@ -6,7 +6,7 @@ global $conn;
 require_once '../../db.php';
 require_once '../../auth.php';
 
-isAuth();
+isDisconnected();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];

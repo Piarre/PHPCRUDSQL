@@ -1,3 +1,15 @@
+<?php
+
+global $conn;
+require_once '../db.php';
+require_once '../auth.php';
+
+isAuth();
+
+$res = $conn->prepare("SELECT * FROM users");
+$res->execute();
+$users = $res->fetchAll();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,22 +19,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Users list</title>
 </head>
-
 <body class="bg-gray-100 p-8">
-
-    <?php
-
-    global $conn;
-    require_once '../db.php';
-    require_once '../auth.php';
-
-    isAuth();
-
-
-    $res = $conn->prepare("SELECT * FROM users");
-    $res->execute();
-    $users = $res->fetchAll();
-    ?>
 
     <div class="max-w-6xl mx-auto">
         <h1 class="mb-4 text-4xl font-bold text-center text-gray-900 md:text-5xl lg:text-6xl">PHP SQL C.R.U.D.</h1>
