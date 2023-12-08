@@ -89,7 +89,8 @@ isDisconnected();
                            placeholder="Age">
                 </div>
                 <div class="mx-10">
-                    <span class="text-red-600 text-[14px] font-bold opacity-0" id="message">Please fill all fields</span>
+                    <span class="text-red-600 text-[14px] font-bold opacity-0"
+                          id="message">Please fill all fields</span>
                     <button id="register-btn"
                             class="bg-blue-500 transition hover:bg-blue-700 my-2 w-full text-white p-2 rounded-md">
                         Register
