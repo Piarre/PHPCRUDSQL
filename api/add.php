@@ -14,7 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $enabled = $_POST["enabled"];
     $age = $_POST["age"];
-    $createdBy = $_SESSION["email"];
+    if (isset($_SESSION["email"])) {
+        $createdBy = $_SESSION["email"];
+    } else {
+        $createdBy = "SYSTEM | REGISTERED USER";
+    }
 
     $req = $conn->prepare('INSERT INTO users (name, surname, email, password, enabled, age, createdBy) VALUES (:name, :surname, :email, :password, :enabled, :age, :createdBy)');
     $req->bindParam(':name', $name);
