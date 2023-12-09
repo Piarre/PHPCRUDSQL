@@ -12,16 +12,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $surname = $_POST["surname"];
     $email = $_POST["email"];
     $password = $_POST["password"];
-    $actif = $_POST["actif"];
+    $enabled = $_POST["enabled"];
     $age = $_POST["age"];
     $createdBy = $_SESSION["email"];
 
-    $req = $conn->prepare('INSERT INTO users (name, surname, email, password, actif, age, createdBy) VALUES (:name, :surname, :email, :password, :actif, :age, :createdBy)');
+    $req = $conn->prepare('INSERT INTO users (name, surname, email, password, enabled, age, createdBy) VALUES (:name, :surname, :email, :password, :enabled, :age, :createdBy)');
     $req->bindParam(':name', $name);
     $req->bindParam(':surname', $surname);
     $req->bindParam(':email', $email);
     $req->bindParam(':password', $password);
-    $req->bindParam(':actif', $actif);
+    $req->bindParam(':enabled', $enabled);
     $req->bindParam(':age', $age);
     $req->bindParam(':createdBy', $createdBy);
 

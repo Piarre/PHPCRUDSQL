@@ -1,16 +1,20 @@
 <?php
 require_once 'auth.php';
-isDisconnected();
+session_start();
+if (isset($_SESSION["email"])) {
+    header("Location: ./dashboard");
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <title>PHP Test</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
 <div class="max-w-5xl mx-auto">
-
     <h1 class="mb-4 text-4xl font-bold text-center text-gray-900 md:text-5xl lg:text-6xl">PHP SQL
         C.R.U.D.</h1>
     <h2 class="mb-4 text-3xl font-bold text-center text-gray-900 md:text-5xl lg:text-6xl">Index</h2>
@@ -34,9 +38,10 @@ isDisconnected();
                 <?php if (isset($_GET["error"])) { ?>
                     <span class="text-red-600 text-[16px] font-bold" id="message">Email or password incorrect</span>
                 <?php } ?>
-                <div class="mx-10">
+                <div class="flex items-center gap-[5px] mx-10">
                     <button class="bg-blue-500 transition hover:bg-blue-700 my-2 w-full text-white p-2 rounded-md"
-                            type="submit">Login
+                            type="submit">
+                        Login
                     </button>
                 </div>
         </div>
@@ -73,21 +78,32 @@ isDisconnected();
                            id="password" placeholder="Password">
                 </div>
 
-                <div class="mb-4" id="actif">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="actif">Actif</label>
-                    <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="text" name="actif"
-                           id="actif"
-                           placeholder="Actif">
-                </div>
-
                 <div class="mb-4" id="age">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="age">Age</label>
                     <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="text" name="age" id="age"
                            placeholder="Age">
                 </div>
-                <div class="mx-10">
-                    <span class="text-red-600 text-[14px] font-bold opacity-0"
-                          id="message">Please fill all fields</span>
+
+                <div class="mb-4 w-full" id="enabled">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" id="text__enabled" for="enabled">Account
+                        enabled</label>
+                    <div class="flex gap-10 justify-center">
+                        <button id="btn__enabled"
+                                class="bg-blue-500/50 transition duration-200 text-white font-bold py-2 px-4 rounded"
+                                disabled onclick="accountActivation()">
+                            Enabled
+                        </button>
+                        <button id="btn__disabled"
+                                class="bg-red-500 hover:bg-red-700 transition duration-200 text-white font-bold py-2 px-4 rounded"
+                                onclick="accountActivation()">
+                            Disabled
+                        </button>
+                    </div>
+                </div>
+
+                <span class="text-red-600 text-[14px] font-bold opacity-0"
+                      id="message">Please fill all fields</span>
+                <div class="flex items-center gap-[5px] mx-10">
                     <button id="register-btn"
                             class="bg-blue-500 transition hover:bg-blue-700 my-2 w-full text-white p-2 rounded-md">
                         Register
@@ -99,6 +115,48 @@ isDisconnected();
 </div>
 
 <script>
+    let accountEnabled = true;
+
+    function accountActivation() {
+        const enabled = document.querySelector("#btn__enabled");
+        const disabled = document.querySelector("#btn__disabled");
+        const text = document.querySelector("#text__enabled");
+
+        if (enabled.classList.contains("bg-blue-500/50")) {
+            enabled.classList.remove("bg-blue-500/50");
+            enabled.classList.add("bg-blue-500");
+            enabled.classList.add("hover:bg-blue-700");
+
+            disabled.classList.remove("bg-red-500");
+            disabled.classList.remove("hover:bg-red-700");
+            disabled.classList.add("bg-red-500/50");
+
+            disabled.disabled = true
+            enabled.disabled = false
+            disabled.value = 0;
+            enabled.value = 1;
+
+            text.innerHTML = "Account disabled"
+            accountEnabled = false;
+        } else {
+            enabled.classList.remove("bg-blue-500");
+            enabled.classList.remove("hover:bg-blue-700");
+            enabled.classList.add("bg-blue-500/50");
+
+            disabled.classList.remove("bg-red-500/50");
+            disabled.classList.add("bg-red-500");
+            disabled.classList.add("hover:bg-red-700");
+
+            disabled.disabled = false
+            enabled.disabled = true
+            disabled.value = 1;
+            enabled.value = 0;
+
+            text.innerHTML = "Account enabled"
+            accountEnabled = true;
+        }
+    }
+
     function isEmailUsed(email) {
         fetch("/api/checkemail.php?email=" + email)
             .then((response) => response.json())
@@ -124,7 +182,6 @@ isDisconnected();
             const surname = document.querySelector("#register-form #surname input").value;
             const email = document.querySelector("#register-form #email input").value;
             const password = document.querySelector("#register-form #password input").value;
-            const actif = document.querySelector("#register-form #actif input").value;
             const age = document.querySelector("#register-form #age input").value;
 
             if (name === "") {
@@ -147,17 +204,12 @@ isDisconnected();
                 document.querySelector("#register-form #password input").classList.add("border-red-500");
             }
 
-            if (actif === "") {
-                document.querySelector("#register-form #actif input").classList.remove("border-gray-300");
-                document.querySelector("#register-form #actif input").classList.add("border-red-500");
-            }
-
             if (age === "" || age === 0) {
                 document.querySelector("#register-form #age input").classList.remove("border-gray-300");
                 document.querySelector("#register-form #age input").classList.add("border-red-500");
             }
 
-            if (name === "" || surname === "" || email === "" || password === "" || actif === "" || (age === "" || age === 0)) {
+            if (name === "" || surname === "" || email === "" || password === "" || (age === "" || age === 0)) {
                 document.querySelector("#message").classList.remove("opacity-0");
                 return;
             } else {
@@ -167,15 +219,13 @@ isDisconnected();
                 data.append("surname", surname);
                 data.append("email", email);
                 data.append("password", password);
-                data.append("actif", actif);
+                data.append("enabled", accountEnabled);
                 data.append("age", age);
 
                 fetch("/api/add.php", {
                     method: "POST",
                     body: data,
                 })
-
-
             }
         },
         false,

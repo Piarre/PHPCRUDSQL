@@ -54,10 +54,10 @@ if ($user == null) {
                    onkeydown="getChanges()">
         </div>
 
-        <div class="mb-4" id="actif">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="actif">Actif</label>
-            <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="text" name="actif" id="actif"
-                   placeholder="Actif" value="<?php echo $user["actif"] ?>" onkeydown="getChanges()">
+        <div class="mb-4" id="enabled">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="enabled">enabled</label>
+            <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="text" name="enabled" id="enabled"
+                   placeholder="enabled" value="<?php echo $user["enabled"] ?>" onkeydown="getChanges()">
         </div>
 
         <div class="mb-4" id="age">
@@ -84,7 +84,7 @@ if ($user == null) {
         const surname = document.querySelector("#surname input").value;
         const email = document.querySelector("#email input").value;
         const password = document.querySelector("#password input").value;
-        const actif = document.querySelector("#actif input").value;
+        const enabled = document.querySelector("#enabled input").value;
         const age = document.querySelector("#age input").value;
 
         console.log(age)
@@ -93,7 +93,7 @@ if ($user == null) {
             || (surname == "<?php echo $user["surname"] ?>")
             || (email == "<?php echo $user["email"] ?>")
             || (password == "<?php echo $user["password"] ?>")
-            || (actif == "<?php echo $user["actif"] ?>")
+            || (enabled == "<?php echo $user["enabled"] ?>")
             || (age == "<?php echo $user["age"] ?>")) {
             console.log("changes")
             document.querySelector("button").classList.remove("opacity-50");
@@ -119,7 +119,7 @@ if ($user == null) {
             const surname = document.querySelector("#surname input").value;
             const email = document.querySelector("#email input").value;
             const password = document.querySelector("#password input").value;
-            const actif = document.querySelector("#actif input").value;
+            const enabled = document.querySelector("#enabled input").value;
             const age = document.querySelector("#age input").value;
 
             if (name === "") {
@@ -142,9 +142,9 @@ if ($user == null) {
                 document.querySelector("#password input").classList.add("border-red-500");
             }
 
-            if (actif === "") {
-                document.querySelector("#actif input").classList.remove("border-gray-300");
-                document.querySelector("#actif input").classList.add("border-red-500");
+            if (enabled === "") {
+                document.querySelector("#enabled input").classList.remove("border-gray-300");
+                document.querySelector("#enabled input").classList.add("border-red-500");
             }
 
             if (age === "" || age === 0) {
@@ -152,7 +152,7 @@ if ($user == null) {
                 document.querySelector("#age input").classList.add("border-red-500");
             }
 
-            if (name === "" || surname === "" || email === "" || password === "" || actif === "" || (age === "" || age === 0)) {
+            if (name === "" || surname === "" || email === "" || password === "" || enabled === "" || (age === "" || age === 0)) {
                 document.querySelector("#message").classList.remove("opacity-0");
                 return;
             } else {
@@ -163,7 +163,7 @@ if ($user == null) {
                 data.append("surname", surname);
                 data.append("email", email);
                 data.append("password", password);
-                data.append("actif", actif);
+                data.append("enabled", enabled);
                 data.append("age", age);
 
                 fetch("/api/update.php", {

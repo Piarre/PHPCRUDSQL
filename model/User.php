@@ -8,7 +8,7 @@ class User
     public $password;
     public $email;
     public $age;
-    public $actif;
+    public $enabled;
     public $createdAt;
     public $updatedAt;
 
@@ -111,17 +111,17 @@ class User
     /**
      * @return mixed
      */
-    public function getActif()
+    public function getEnabled()
     {
-        return $this->actif;
+        return $this->enabled;
     }
 
     /**
-     * @param mixed $actif
+     * @param mixed $enabled
      */
-    public function setActif($actif): void
+    public function setEnabled($enabled): void
     {
-        $this->actif = $actif;
+        $this->enabled = $enabled;
     }
 
     /**
@@ -165,11 +165,11 @@ class User
      * @param $password
      * @param $email
      * @param $age
-     * @param $actif
+     * @param $enabled
      * @param $createdAt
      * @param $updatedAt
      */
-    public function __construct($id, $name, $surname, $password, $email, $age, $actif, $createdAt, $updatedAt)
+    public function __construct($id, $name, $surname, $password, $email, $age, $enabled, $createdAt, $updatedAt)
     {
         $this->id = $id;
         $this->name = $name;
@@ -177,10 +177,12 @@ class User
         $this->password = $password;
         $this->email = $email;
         $this->age = $age;
-        $this->actif = $actif;
+        $this->enabled = $enabled;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }
+
+
 }
 
 ?>
