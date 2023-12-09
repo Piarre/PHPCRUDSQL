@@ -18,8 +18,9 @@ if ($_GET['error'] != "databaseConn" || !isset($_GET['message'])) {
 </head>
 <body class="flex items-center justify-center h-screen bg-gray-200">
 <div class="bg-rose-300 p-8 rounded-lg">
-    <p class="text-red-600 text-xl font-bold mb-4 text-wrap">Error : Database connection</p>
-    <p class="text-gray-600 text-lg text-wrap"><?php echo iconv("ISO-8859-1", "UTF-8", $_GET['message']) ?></p>
+    <p class="text-red-600 text-xl font-bold text-wrap">Error : Database connection</p>
+    <p class="text-gray-600 text-lg text-wrap mb-4"><?php echo $_GET['message'] ?></p>
+    <button class="bg-red-500 w-20 text-white p-2 rounded-md transition font-bold" onclick="history.back()">Go back</button>
 </div>
 </body>
 </html>
