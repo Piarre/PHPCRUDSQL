@@ -2,3 +2,8 @@
     word-wrap: break-word;
     max-width: 90ch;
 }
+
+tr.group,
+tr.group:hover {
+    background-color: #ddd !important;
+}
