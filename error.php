@@ -1,10 +1,6 @@
 <?php
 
-if ($_GET['error'] != "databaseConn") {
-    header("Location: ./index.php");
-} elseif (!isset($_GET['message'])) {
-    header("Location: ./index.php");
-} elseif (empty($_GET['message'])) {
+if ($_GET['error'] != "databaseConn" || !isset($_GET['message'])) {
     header("Location: ./index.php");
 }
 
