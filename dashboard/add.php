@@ -43,6 +43,12 @@ isAuth();
                    id="password" placeholder="Password">
         </div>
 
+        <div class="mb-4" id="age">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="age">Age</label>
+            <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="number" name="age" id="age"
+                   placeholder="Age">
+        </div>
+
         <div class="mb-4 w-full" id="enabled">
             <label class="block text-gray-700 text-sm font-bold mb-2" id="text__enabled" for="enabled">Account
                 enabled</label>
@@ -60,12 +66,6 @@ isAuth();
                     Disabled
                 </button>
             </div>
-        </div>
-
-        <div class="mb-4" id="age">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="age">Age</label>
-            <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="number" name="age" id="age"
-                   placeholder="Age">
         </div>
 
         <span class="text-red-600 text-[14px] font-bold opacity-0" id="message">Please fill all fields</span>
@@ -193,7 +193,7 @@ isAuth();
                     body: data,
                 })
 
-                window.location.href = `/dashboard?message=Added user ${name}?>`
+                window.location.href = `/dashboard?message=Added user ${name}.`
             }
         },
         false,

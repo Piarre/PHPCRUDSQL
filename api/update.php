@@ -13,9 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $enabled = $_POST["enabled"];
     $age = $_POST["age"];
-    $createdBy = $_POST["createdBy"];
 
-    $req = $conn->prepare('UPDATE users SET name = :name, surname = :surname, email = :email, password = :password, enabled = :enabled, age = :age, createdBy = :createdBy WHERE id = :id');
+    $req = $conn->prepare('UPDATE users SET name = :name, surname = :surname, email = :email, password = :password, enabled = :enabled, age = :age WHERE id = :id');
     $req->bindParam(':id', $_POST['id']);
     $req->bindParam(':name', $name);
     $req->bindParam(':surname', $surname);
@@ -23,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $req->bindParam(':password', $password);
     $req->bindParam(':enabled', $enabled);
     $req->bindParam(':age', $age);
-    $req->bindParam(':createdBy', $createdBy);
 
     $req->execute();
 }

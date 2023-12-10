@@ -6,10 +6,10 @@ if ($_SERVER['SCRIPT_FILENAME'] == __FILE__) {
 }
 
 $USERNAME = "root";
-$PASSWORD = "password";
+$PASSWORD = "IDP34+1";
 
 try {
-    $conn = new PDO('mysql:host=dlocalhost;dbname=lemoine', $USERNAME, $PASSWORD);
+    $conn = new PDO('mysql:host=localhost;dbname=lemoine', $USERNAME, $PASSWORD);
 } catch (PDOException $e) {
     header("Location: /error.php?error=databaseConn&message=" . $e->getMessage());
     exit();

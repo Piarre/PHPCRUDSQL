@@ -18,6 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $req->fetch();
 
     if ($user) {
+        if ($user["enabled"] == 0) {
+            header("Location: ../../index.php?error=disabled");
+            return;
+        }
         $_SESSION["email"] = $email;
         $_SESSION["id"] = $user["id"];
         header("Location: /dashboard/index.php");

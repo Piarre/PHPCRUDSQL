@@ -32,19 +32,19 @@ if ($user == null) {
         <div class="mb-4 " id="name">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Name</label>
             <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="text" name="name" id="name"
-                   placeholder="Name" value="<?php echo $user["name"] ?>" onkeydown="getChanges()">
+                   placeholder="Name" value="<?php echo $user["name"] ?>" oninput="getChanges()">
         </div>
 
         <div class="mb-4" id="surname">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="surname">Surname</label>
             <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="text" name="surname"
-                   id="surname" placeholder="Surname" value="<?php echo $user["surname"] ?>" onkeydown="getChanges()">
+                   id="surname" placeholder="Surname" value="<?php echo $user["surname"] ?>" oninput="getChanges()">
         </div>
 
         <div class="mb-4" id="email">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email</label>
             <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="text" name="email" id="email"
-                   placeholder="Email" value="<?php echo $user["email"] ?>" onkeydown="getChanges()">
+                   placeholder="Email" value="<?php echo $user["email"] ?>" oninput="getChanges()">
         </div>
 
         <div class="mb-4" id="password">
@@ -54,24 +54,40 @@ if ($user == null) {
                    onkeydown="getChanges()">
         </div>
 
-        <div class="mb-4" id="enabled">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="enabled">enabled</label>
-            <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="text" name="enabled" id="enabled"
-                   placeholder="enabled" value="<?php echo $user["enabled"] ?>" onkeydown="getChanges()">
-        </div>
-
         <div class="mb-4" id="age">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="age">Age</label>
             <input class="border-2 w-full border border-gray-300 p-2 rounded-md" type="number" name="age" id="age"
-                   placeholder="Age" value="<?php echo $user["age"] ?>" onkeydown="getChanges()">
+                   placeholder="Age" value="<?php echo $user["age"] ?>" oninput="getChanges()">
+        </div>
+
+        <div class="mb-4 w-full" id="enabled">
+            <label class="block text-gray-700 text-sm font-bold mb-2" id="text__enabled" for="enabled">Account
+                enabled</label>
+            <div class="flex gap-10 justify-center">
+                <button id="btn__enabled"
+                        class="bg-blue-500/50 hover:font-bold hover:-translate-y-1 hover:scale-110 transition duration-200 text-white font-bold py-2 px-4 rounded"
+                        type="button"
+                        disabled onclick="accountActivation()">
+                    Enabled
+                </button>
+                <button id="btn__disabled"
+                        class="bg-red-500 hover:-translate-y-1 hover:scale-110 hover:bg-red-700 transition duration-200 text-white font-bold py-2 px-4 rounded"
+                        type="button"
+                        onclick="accountActivation()">
+                    Disabled
+                </button>
+            </div>
         </div>
 
         <span class="text-red-600 text-[14px] font-bold opacity-0" id="message">Please fill all fields</span>
         <div class="flex gap-10 px-4">
             <a type="button"
-               class="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 w-full text-white p-2 rounded-md transition text-center items-center""
-            onclick="history.back()">Go Back</a>
-            <button class="bg-blue-500 w-full text-white p-2 rounded-md opacity-50 transition" disabled type="submit">
+               id="button_back"
+               class="hover:cursor-pointer hover:-translate-y-1 font-bold hover:scale-110 bg-blue-500 hover:bg-blue-700 w-full text-white p-2 rounded-md transition text-center items-center"
+               onclick="history.back()">Go Back</a>
+            <button id="updateButton"
+                    class="font-bold bg-blue-500 w-full text-white p-2 rounded-md opacity-50 transition" disabled
+                    type="submit">
                 Update
             </button>
         </div>
@@ -79,33 +95,98 @@ if ($user == null) {
 </div>
 
 <script>
-    function getChanges() {
-        const name = document.querySelector("#name input").value;
-        const surname = document.querySelector("#surname input").value;
-        const email = document.querySelector("#email input").value;
-        const password = document.querySelector("#password input").value;
-        const enabled = document.querySelector("#enabled input").value;
-        const age = document.querySelector("#age input").value;
+    let accountEnabled = <?php echo $user["enabled"] ?>;
 
-        console.log(age)
+    function accountActivation() {
+        const enabled = document.querySelector("#btn__enabled");
+        const disabled = document.querySelector("#btn__disabled");
+        const text = document.querySelector("#text__enabled");
 
-        if ((name == "<?php echo $user["name"] ?>")
-            || (surname == "<?php echo $user["surname"] ?>")
-            || (email == "<?php echo $user["email"] ?>")
-            || (password == "<?php echo $user["password"] ?>")
-            || (enabled == "<?php echo $user["enabled"] ?>")
-            || (age == "<?php echo $user["age"] ?>")) {
-            console.log("changes")
-            document.querySelector("button").classList.remove("opacity-50");
-            document.querySelector("button").classList.add("hover:bg-blue-700");
-            document.querySelector("button").disabled = false;
+        const updateButton = document.querySelector("#updateButton");
+        updateButton.classList.remove("opacity-50");
+        updateButton.classList.add("hover:bg-blue-700", "hover:-translate-y-1", "hover:scale-110");
+        updateButton.disabled = false;
+
+        if (enabled.classList.contains("bg-blue-500/50")) {
+            enabled.classList.remove("bg-blue-500/50");
+            enabled.classList.add("bg-blue-500");
+            enabled.classList.add("hover:bg-blue-700");
+
+            disabled.classList.remove("bg-red-500");
+            disabled.classList.remove("hover:bg-red-700");
+            disabled.classList.add("bg-red-500/50");
+
+            disabled.disabled = true
+            enabled.disabled = false
+            disabled.value = 0;
+            enabled.value = 1;
+
+            text.innerHTML = "Account disabled"
+            accountEnabled = false;
         } else {
-            console.log("no changes")
-            document.querySelector("button").classList.add("opacity-50");
-            document.querySelector("button").classList.remove("hover:bg-blue-700");
-            document.querySelector("button").disabled = true;
-        }
+            enabled.classList.remove("bg-blue-500");
+            enabled.classList.remove("hover:bg-blue-700");
+            enabled.classList.add("bg-blue-500/50");
 
+            disabled.classList.remove("bg-red-500/50");
+            disabled.classList.add("bg-red-500");
+            disabled.classList.add("hover:bg-red-700");
+
+            disabled.disabled = false
+            enabled.disabled = true
+            disabled.value = 1;
+            enabled.value = 0;
+
+            text.innerHTML = "Account enabled"
+            accountEnabled = true;
+        }
+    }
+
+    let initialValues = {
+        name: "",
+        surname: "",
+        email: "",
+        password: "",
+        age: ""
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        initialValues = {
+            name: document.querySelector("#name input").value,
+            surname: document.querySelector("#surname input").value,
+            email: document.querySelector("#email input").value,
+            password: document.querySelector("#password input").value,
+            age: document.querySelector("#age input").value
+        };
+    });
+
+    function getChanges() {
+        const currentValues = {
+            name: document.querySelector("#name input").value,
+            surname: document.querySelector("#surname input").value,
+            email: document.querySelector("#email input").value,
+            password: document.querySelector("#password input").value,
+            age: document.querySelector("#age input").value
+        };
+
+        const hasChanges =
+            currentValues.name !== initialValues.name ||
+            currentValues.surname !== initialValues.surname ||
+            currentValues.email !== initialValues.email ||
+            currentValues.password !== initialValues.password ||
+            currentValues.age !== initialValues.age;
+
+        const updateButton = document.querySelector("#updateButton");
+        document.querySelector(accountEnabled ? "#btn__enabled" : "#btn__disabled").click();
+        if (hasChanges) {
+            updateButton.classList.remove("opacity-50");
+            updateButton.classList.add("hover:bg-blue-700", "hover:-translate-y-1", "hover:scale-110");
+            updateButton.disabled = false;
+        } else {
+            updateButton.classList.add("opacity-50");
+            updateButton.classList.remove("hover:bg-blue-700", "hover:-translate-y-1", "hover:scale-110");
+            updateButton.disabled = true;
+        }
 
         return null;
     }
@@ -119,7 +200,6 @@ if ($user == null) {
             const surname = document.querySelector("#surname input").value;
             const email = document.querySelector("#email input").value;
             const password = document.querySelector("#password input").value;
-            const enabled = document.querySelector("#enabled input").value;
             const age = document.querySelector("#age input").value;
 
             if (name === "") {
@@ -142,28 +222,23 @@ if ($user == null) {
                 document.querySelector("#password input").classList.add("border-red-500");
             }
 
-            if (enabled === "") {
-                document.querySelector("#enabled input").classList.remove("border-gray-300");
-                document.querySelector("#enabled input").classList.add("border-red-500");
-            }
-
             if (age === "" || age === 0) {
                 document.querySelector("#age input").classList.remove("border-gray-300");
                 document.querySelector("#age input").classList.add("border-red-500");
             }
 
-            if (name === "" || surname === "" || email === "" || password === "" || enabled === "" || (age === "" || age === 0)) {
+            if (name === "" || surname === "" || email === "" || password === "" || (age === "" || age === 0)) {
                 document.querySelector("#message").classList.remove("opacity-0");
-                return;
+
             } else {
                 document.querySelector("#message").classList.add("opacity-0");
-                var data = new FormData();
+                const data = new FormData();
                 data.append("id", "<?php echo $user["id"]; ?>")
                 data.append("name", name);
                 data.append("surname", surname);
                 data.append("email", email);
                 data.append("password", password);
-                data.append("enabled", enabled);
+                data.append("enabled", accountEnabled ? 1 : 0);
                 data.append("age", age);
 
                 fetch("/api/update.php", {
@@ -171,7 +246,7 @@ if ($user == null) {
                     body: data,
                 })
 
-                window.location.href = "/dashboard";
+                window.location.href = "/dashboard?message=Updated user <?php echo $user["name"]; ?>."
             }
         },
         false,
