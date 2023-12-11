@@ -1,5 +1,5 @@
 <?php
-require_once 'auth.php';
+require_once 'functions/auth.php';
 session_start();
 if (isset($_SESSION["email"])) {
     header("Location: ./dashboard");
@@ -235,7 +235,10 @@ if (isset($_SESSION["email"])) {
             },
             false,
         );
-    </script>
 
+        document.addEventListener("DOMContentLoaded", () => {
+            history.pushState('', document.title, window.location.pathname);
+        }, false)
+    </script>
 </body>
 </html

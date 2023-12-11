@@ -1,7 +1,7 @@
 <?php
 
 global $conn;
-require_once '../db.php';
+require_once '../functions/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $email = $_GET["email"];

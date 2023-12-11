@@ -1,11 +1,16 @@
 <?php
 global $conn;
-require_once '../db.php';
-require_once '../auth.php';
+require_once '../functions/db.php';
+require_once '../functions/auth.php';
 
 isAuth();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!(isset($_POST["name"])) || !(isset($_POST["surname"])) || !(isset($_POST["email"])) || !(isset($_POST["password"])) || !(isset($_POST["enabled"])) || !(isset($_POST["age"]))) {
+        header("Content-Type: application/json");
+        echo json_encode(array("error" => "Missing name, surname, email, password, enabled or age."));
+        exit();
+    }
     $name = $_POST["name"];
     $surname = $_POST["surname"];
     $email = $_POST["email"];

@@ -1,8 +1,8 @@
 <?php
 
 global $conn;
-require_once '../db.php';
-require_once '../auth.php';
+require_once '../functions/db.php';
+require_once '../functions/auth.php';
 
 isAuth();
 

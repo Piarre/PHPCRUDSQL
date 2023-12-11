@@ -1,12 +1,25 @@
 <?php
 
 global $conn;
-require_once '../../db.php';
-require_once '../../auth.php';
+require_once '../../functions/db.php';
+require_once '../../functions/auth.php';
 
 isDisconnected();
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_SESSION["email"])) {
+        header("Content-Type: application/json");
+        echo json_encode(array("error" => "Already logged in."));
+        exit();
+    }
+
+    if (!(isset($_POST["email"])) || !(isset($_POST["password"]))) {
+        header("Content-Type: application/json");
+        echo json_encode(array("error" => "Missing email or password."));
+        exit();
+    }
+
     $email = $_POST["email"];
     $password = $_POST["password"];
 

@@ -20,7 +20,7 @@ if ($_GET['error'] != "databaseConn" || !isset($_GET['message'])) {
 <div class="bg-rose-300 p-8 rounded-lg">
     <p class="text-red-600 text-xl font-bold text-wrap">Error : Database connection</p>
     <p class="text-gray-600 text-lg text-wrap mb-4"><?php echo $_GET['message'] ?></p>
-    <button class="bg-red-500 w-20 text-white p-2 rounded-md transition font-bold" onclick="history.back()">Go back</button>
+    <button class="hover:scale-110 hover:-translate-y-1 bg-red-500 w-20 text-white p-2 rounded-md transition font-bold" onclick="history.back()">Go back</button>
 </div>
 </body>
 </html>
